@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/client/InputPoint.java=UTF-8
 encoding//src/client/StudentDashboard.java=UTF-8
+encoding//src/client/TeacherManagement.java=UTF-8
 encoding//src/core/DashboardControl.java=UTF-8
 encoding//src/core/InputPointControl.java=UTF-8
+encoding//src/core/TeacherControl.java=UTF-8

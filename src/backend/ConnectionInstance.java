@@ -24,28 +24,28 @@ public class ConnectionInstance {
 		switch (serverCode) {
 			case 1:
 				System.out.println("Entering Database Server 1");
-				ENV.setINSTANCE_NAME("DESKTOP-73DQM32\\MSSQLSERVER1;");
+				ENV.setINSTANCE_NAME("Phoenix-PC\\MSSQLSERVER1;");
 				ENV.setDATABASE_NAME("HOCBA;");
 				ENV.setUSER_NAME("sa");
 				ENV.setPASSWORD("123123");
 				break;
 			case 2:
 				System.out.println("Entering Database Server 2");
-				 ENV.setINSTANCE_NAME("DESKTOP-73DQM32\\MSSQLSERVER2;");
+				 ENV.setINSTANCE_NAME("Phoenix-PC\\MSSQLSERVER2;");
 				 ENV.setDATABASE_NAME("HOCBA_SV2;");
 				 ENV.setUSER_NAME("sa");
 				 ENV.setPASSWORD("123123");
 				 break;
 			case 3:
 				System.out.println("Entering Database Server 3");
-				ENV.setINSTANCE_NAME("DESKTOP-73DQM32\\MSSQLSERVER3;");
+				ENV.setINSTANCE_NAME("Phoenix-PC\\MSSQLSERVER3;");
 				ENV.setDATABASE_NAME("HOCBA_SV3_REP;");
 				ENV.setUSER_NAME("sa");
 				ENV.setPASSWORD("123123");
 				break;
 			default:
 				System.out.println("Entering Database Server Unknown");
-				ENV.setINSTANCE_NAME("DESKTOP-73DQM32;");
+				ENV.setINSTANCE_NAME("Phoenix-PC;");
 				ENV.setDATABASE_NAME("");
 				ENV.setUSER_NAME("sa");
 				ENV.setPASSWORD("123123");
