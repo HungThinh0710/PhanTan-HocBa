@@ -104,6 +104,39 @@ public class DashboardControl {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(e);
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	public boolean deleteStudentById(int studentId) {
+		boolean result = false;
+		try {
+			this.conn = CI.prepareServerInstance(2);
+			String sqlQuery = "DELETE FROM students WHERE ID=?";
+			
+			 PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+			 
+			 //Set Param
+			 stmt.setInt(1, studentId);
+			 int i = stmt.executeUpdate();
+			 
+			 //Close connection
+			 stmt.close();
+			 conn.close();
+			 
+			 if (i > 0) {
+			     result = true;
+			 } else {
+			     result = false;
+			 }
+	         
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e);
 			result = false;
 		}
 		

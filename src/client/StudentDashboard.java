@@ -47,7 +47,8 @@ public class StudentDashboard extends JFrame {
 	private JTextField txtID;
 	private JButton btnChange;
 	private JButton btnReport;
-
+	private JButton btnRefresh; 
+	private JButton btnDelete;
 	/**
 	 * Launch the application.
 	 */
@@ -107,10 +108,12 @@ public class StudentDashboard extends JFrame {
 					System.out.println("False");
 					btnReport.setEnabled(false);
 					btnChange.setEnabled(false);
+					btnDelete.setEnabled(false);
 				}
 				else {
 					btnReport.setEnabled(true);
 					btnChange.setEnabled(true);
+					btnDelete.setEnabled(true);
 				}
 			}
 		});
@@ -118,7 +121,7 @@ public class StudentDashboard extends JFrame {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		scrollPane.setViewportView(table);
 		
-		JLabel lblTitle = new JLabel("QU\u1EA2N L\u00DD SINH VI\u00CAN");
+		JLabel lblTitle = new JLabel("QUẢN LÝ HỌC SINH");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -132,8 +135,8 @@ public class StudentDashboard extends JFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panelAction, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panelSelection, GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
@@ -155,7 +158,7 @@ public class StudentDashboard extends JFrame {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)
 					.addGap(6)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(panelAction, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelAction, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panelSelection, GroupLayout.PREFERRED_SIZE, 281, Short.MAX_VALUE))
 					.addGap(21))
 		);
@@ -208,11 +211,25 @@ public class StudentDashboard extends JFrame {
 			}
 		});
 		btnReport.setIcon(new ImageIcon(this.getClass().getResource("/student_import.png")));
+		
+		btnDelete = new JButton("Xoá");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean isSuccess = dasboardControl.deleteStudentById(Integer.parseInt(txtID.getText().toString()));
+				if(isSuccess) {
+					JOptionPane.showMessageDialog(null, "Xoá học sinh thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+					fillData();
+				}
+				else JOptionPane.showMessageDialog(null, "Đã có lỗi trong quá trình xoá học sinh", "Thất bại", JOptionPane.ERROR_MESSAGE);			
+			}
+		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap(281, Short.MAX_VALUE)
+					.addContainerGap(114, Short.MAX_VALUE)
+					.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnReport)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnReset)
@@ -226,7 +243,8 @@ public class StudentDashboard extends JFrame {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnChange)
 						.addComponent(btnReset)
-						.addComponent(btnReport))
+						.addComponent(btnReport)
+						.addComponent(btnDelete))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -427,6 +445,9 @@ public class StudentDashboard extends JFrame {
 		JButton btnAddStudents = new JButton("Th\u00EAm h\u1ECDc sinh");
 		btnAddStudents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddStudent ad = new AddStudent();
+				ad.frmThmHcSinh.setVisible(true);
+				
 			}
 		});
 		btnAddStudents.setIcon(new ImageIcon(this.getClass().getResource("/add_student_16x16.png")));
@@ -443,6 +464,17 @@ public class StudentDashboard extends JFrame {
 		});
 		btnManageReports.setBounds(171, 24, 151, 23);
 		panelAction.add(btnManageReports);
+		
+		btnRefresh = new JButton("Làm mới dữ liệu");
+		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnRefresh.setIcon(new ImageIcon(this.getClass().getResource("/refresh.png")));
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fillData();
+			}
+		});
+		btnRefresh.setBounds(10, 58, 151, 23);
+		panelAction.add(btnRefresh);
 		frmBngiuKhin.getContentPane().setLayout(groupLayout);
 		fillData();
 		btnChange.setEnabled(false);
@@ -485,5 +517,6 @@ public class StudentDashboard extends JFrame {
 		txtSchool.setText("");
 		btnChange.setEnabled(false);
 		btnReport.setEnabled(false);
+		btnDelete.setEnabled(false);
 	}
 }
