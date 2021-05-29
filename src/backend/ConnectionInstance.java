@@ -24,21 +24,21 @@ public class ConnectionInstance {
 		switch (serverCode) {
 			case 1:
 				System.out.println("Entering Database Server 1");
-				ENV.setINSTANCE_NAME("Phoenix-PC\\NEWSQLSERVER1;");
+				ENV.setINSTANCE_NAME("DESKTOP-M0H9CD2\\SQLSERVER1;");
 				ENV.setDATABASE_NAME("HOCBA;");
 				ENV.setUSER_NAME("sa");
 				ENV.setPASSWORD("123123");
 				break;
 			case 2:
 				System.out.println("Entering Database Server 2");
-				 ENV.setINSTANCE_NAME("Phoenix-PC\\NEWSQLSERVER2;");
+				 ENV.setINSTANCE_NAME("DESKTOP-M0H9CD2\\SQLSERVER2;");
 				 ENV.setDATABASE_NAME("HOCBA_SV2;");
 				 ENV.setUSER_NAME("sa");
 				 ENV.setPASSWORD("123123");
 				 break;
 			case 3:
 				System.out.println("Entering Database Server 3");
-				ENV.setINSTANCE_NAME("Phoenix-PC\\NEWSQLSERVER3;");
+				ENV.setINSTANCE_NAME("DESKTOP-M0H9CD2\\SQLSERVER3;");
 				ENV.setDATABASE_NAME("HOCBA_SV3;");
 				ENV.setUSER_NAME("sa");
 				ENV.setPASSWORD("123123");
@@ -74,8 +74,15 @@ public class ConnectionInstance {
             System.out.println("Connect to SQLServer successfully!");
         } catch (Exception ex) {
             System.err.println("");
-            System.err.println("Connect failure! Check again.");
-            ex.printStackTrace();
+            if(ex.getMessage().toString().contains("Verify the server and instance names and check that no firewall is blocking UDP traffic to port 1434")) {
+            	System.err.println("SQL Connect Error: Please enable `SQL Server Browser` service");
+            	System.exit(0);
+            }
+            else {
+            	System.err.println("Connect failure! Check again.");
+            	ex.printStackTrace();
+            	System.exit(0);
+            }
         }
         return conn;
     }

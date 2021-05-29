@@ -3,6 +3,7 @@ package backend;
 public class ConfigEnvDatabase {
 	private String INSTANCE_NAME;
 	private String DATABASE_NAME;
+	@SuppressWarnings("unused")
 	private String DB_SQL_URL;
 	private String USER_NAME;
 	private String PASSWORD;

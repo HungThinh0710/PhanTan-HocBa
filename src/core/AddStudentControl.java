@@ -21,8 +21,8 @@ public class AddStudentControl {
 		boolean result = false;
 		try {
 			this.conn = CI.prepareServerInstance(2);
-			String sqlQuery = "INSERT INTO students (first_name, last_name, address, phone_number, dob, home_town, school_id, academic_year_start) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String sqlQuery = "INSERT INTO students (first_name, last_name, address, phone_number, gender, dob, home_town, school_id, academic_year_start) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			 PreparedStatement stmt = conn.prepareStatement(sqlQuery);
 			 
@@ -31,10 +31,11 @@ public class AddStudentControl {
 			 stmt.setString(2, student.getlastName());
 			 stmt.setString(3, student.getAddress());
 			 stmt.setString(4, student.getPhoneNumber());
-			 stmt.setDate(5, java.sql.Date.valueOf("1999-03-07") );
-			 stmt.setString(6, student.getHomeTown());
-			 stmt.setInt(7, Integer.parseInt(student.getSchoolId()));
-			 stmt.setDate(8 ,java.sql.Date.valueOf(student.getAcademicYearStart()));
+			 stmt.setString(5, "Nam");
+			 stmt.setDate(6, java.sql.Date.valueOf("1999-03-07") );
+			 stmt.setString(7, student.getHomeTown());
+			 stmt.setInt(8, Integer.parseInt(student.getSchoolId()));
+			 stmt.setDate(9 ,java.sql.Date.valueOf(student.getAcademicYearStart()));
 			 int i = stmt.executeUpdate();
 			 
 			 //Close connection

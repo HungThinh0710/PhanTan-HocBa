@@ -35,11 +35,14 @@ public class DashboardControl {
 		return column;
 	}
 	
-	public ArrayList<Student> getArrayListStudent() {
+	public ArrayList<Student> getArrayListStudent(int server) {
 		try {
-			this.conn = CI.prepareServerInstance(1);
+			if(server <= 0) server = 1;
+			System.out.println("GETTING STUDENT FROM SERVER " + server);
+			this.conn = CI.prepareServerInstance(server);
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM students ORDER BY id DESC"); //Without relationship
+			ResultSet rs = stmt.executeQuery("SELECT std.*, schl.school_name FROM students as std INNER JOIN schools as schl ON school_id = schl.id ORDER BY std.id DESC;"); 
 			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			String data[][] = {};
@@ -56,7 +59,7 @@ public class DashboardControl {
 				String phoneNumber = rs.getString("phone_number");
 				String gender = rs.getString("gender");
 				String homeTown = rs.getString("home_town");
-				String schoolId = rs.getString("school_id");
+				String schoolId = rs.getString("school_name");
 				String academicYearStart = rs.getString("academic_year_start");
 				student = new Student(ID, firstName, lastName, address, phoneNumber, gender, homeTown, schoolId, academicYearStart);
 				studentList.add(student);

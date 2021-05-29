@@ -17,6 +17,7 @@ import model.Student;
 
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -60,6 +61,8 @@ public class InputPoint extends JFrame {
 	private JTextField txtFinalExam;
 	private JTextField txtMiddleExam;
 	private InputPointControl inputPointControl;
+	private int idSelected;
+	private int studentId;
 	
 	/**
 	 * Launch the application.
@@ -84,11 +87,15 @@ public class InputPoint extends JFrame {
 
 	
 	public InputPoint(int studentId) {
+		System.out.println("DEBUG_");
+		System.out.println(studentId);
 		initialize(studentId);
-
+		
 	}
 	
 	private void initialize(int studentId) {
+		System.out.println("DEBUG_2");
+		System.out.println(studentId);
 		setTitle("Qu\u1EA3n l\u00FD \u0111i\u1EC3m");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -126,11 +133,12 @@ public class InputPoint extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int i = tblReport1.getSelectedRow();
 				TableModel tableModel = tblReport1.getModel();
-				txtSemester.setText(tableModel.getValueAt(i, 0).toString());
-				txtSubject.setText(tableModel.getValueAt(i, 1).toString());
-				txtDailyExam.setText(tableModel.getValueAt(i, 2).toString());
-				txtfifteenMinutes.setText(tableModel.getValueAt(i, 3).toString());
-				txtOnePeriodExam.setText(tableModel.getValueAt(i, 4).toString());
+				idSelected = (int) tableModel.getValueAt(i, 0);
+				txtSemester.setText(tableModel.getValueAt(i, 1).toString());
+				txtSubject.setText(tableModel.getValueAt(i, 2).toString());
+				txtDailyExam.setText(tableModel.getValueAt(i, 3).toString());
+				txtfifteenMinutes.setText(tableModel.getValueAt(i, 4).toString());
+				txtOnePeriodExam.setText(tableModel.getValueAt(i, 5).toString());
 				txtMiddleExam.setText(tableModel.getValueAt(i, 6).toString());
 				txtFinalExam.setText(tableModel.getValueAt(i, 7).toString());
 				
@@ -236,6 +244,22 @@ public class InputPoint extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO: Save scores
+				Report report = new Report();
+				report.setId(idSelected);
+				report.setDailyExam(Float.parseFloat(txtDailyExam.getText()));
+				report.setFifteenExam(Float.parseFloat(txtfifteenMinutes.getText()));
+				report.setOnePeriodExam(Float.parseFloat(txtOnePeriodExam.getText()));
+				report.setMiddleSemester(Float.parseFloat(txtMiddleExam.getText()));
+				report.setFinalSemester(Float.parseFloat(txtFinalExam.getText()));
+				boolean isSuccess = inputPointControl.updatePoint(report);
+				if(isSuccess) {
+					JOptionPane.showMessageDialog(null, "Cập nhật bảng điểm thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);						
+//					DefaultTableModel tableModel = (DefaultTableModel) tblReport1.getModel();
+//					tableModel.setRowCount(0);
+					initialTable(studentId);
+				}
+				else JOptionPane.showMessageDialog(null, "Đã có lỗi trong quá trình cập nhật bảng điểm", "Thất bại", JOptionPane.ERROR_MESSAGE);						
+
 			}
 		});
 		btnSave.setBounds(10, 15, 89, 23);
@@ -330,7 +354,7 @@ public class InputPoint extends JFrame {
 		inputPointControl = new InputPointControl(studentId); 
 		initialTabbed();
 		initialTable(studentId);
-		initialStudentInfo();
+//		initialStudentInfo();
 	}
 	
 	private void initialTabbed() {
@@ -341,28 +365,37 @@ public class InputPoint extends JFrame {
 	}
 	
 	private void initialTable(int studentId) {
-
+		System.out.println("DEBUG_3");
+		System.out.println(studentId);
+		this.studentId = studentId;
 		String[] header = inputPointControl.getHeaderTable();
 		ArrayList <Report> reportList = inputPointControl.getReportStudent(studentId);
 		DefaultTableModel model = new DefaultTableModel(header, 0);
 		Object[] row = new Object[header.length];
 
 		for (int i = 0; i < reportList.size(); i++) {
-			row[0] = reportList.get(i).getSemeter();
-			row[1] = inputPointControl.convertSubjectIdToName(reportList.get(i).getSubjectId());
-			row[2] = reportList.get(i).getDailyExam();
-			row[3] = reportList.get(i).getFifteenExam();
-			row[4] = reportList.get(i).getOnePeriodExam();
-			row[5] = reportList.get(i).getMiddleSemester();
-			row[6] = reportList.get(i).getFifteenExam();
+			row[0] = reportList.get(i).getId();
+			row[1] = reportList.get(i).getSemeter();
+//			row[1] = inputPointControl.convertSubjectIdToName(reportList.get(i).getSubjectId());
+			row[2] = reportList.get(i).getSubjectName();
+			row[3] = reportList.get(i).getDailyExam();
+			row[4] = reportList.get(i).getFifteenExam();
+			row[5] = reportList.get(i).getOnePeriodExam();
+			row[6] = reportList.get(i).getMiddleSemester();
 			row[7] = reportList.get(i).getFifteenExam();
+			row[8] = reportList.get(i).getFifteenExam();
+			txtClass.setText(reportList.get(i).getClassName());
 			model.addRow(row);
+			txtSchool.setText("THCS Trần Hưng Đạo");
+			txtAcademicYear.setText(reportList.get(0).getAcademicYearStart());
+			txtFullName.setText(reportList.get(0).getFirstName() + reportList.get(0).getLastName() );
 		}
 		tblReport1.setModel(model);
+		
 	}
 	
-	private void initialStudentInfo() {
-		Student student = inputPointControl.liteStudentInfo();
-		txtFullName.setText(student.getlastName() + ""+ student.getFirstName());
-	}
+//	private void initialStudentInfo() {
+//		Student student = inputPointControl.liteStudentInfo();
+//		txtFullName.setText(student.getlastName() + ""+ student.getFirstName());
+//	}
 }

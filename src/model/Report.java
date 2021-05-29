@@ -8,6 +8,7 @@ public class Report {
 	public int studentId;
 	public int classId;
 	public int subjectId;
+	public String subjectName;
 	public float dailyExam;
 	public float fifteenExam;
 	public float onePeriodExam;
@@ -15,16 +16,24 @@ public class Report {
 	public float finalSemester;
 	public Date reportYear;
 	public int semeter;
+	public String className;
+	public String firstName;
+	public String lastName;
+	public String academicYearStart;
 	
+	public Report() {
+		
+	}
 	
-	
-	public Report(int id, int studentId, int classId, int subjectId, float dailyExam, float fifteenExam,
-			float onePeriodExam, float middleSemester, float finalSemester, Date reportYear, int semeter) {
+	public Report(int id, int studentId, int classId, int subjectId, String subjectName, float dailyExam, float fifteenExam,
+			float onePeriodExam, float middleSemester, float finalSemester, 
+			Date reportYear, int semeter, String className, String firstName, String lastName, String academicYearStar) {
 		super();
 		this.id = id;
 		this.studentId = studentId;
 		this.classId = classId;
 		this.subjectId = subjectId;
+		this.subjectName = subjectName;
 		this.dailyExam = dailyExam;
 		this.fifteenExam = fifteenExam;
 		this.onePeriodExam = onePeriodExam;
@@ -32,6 +41,10 @@ public class Report {
 		this.finalSemester = finalSemester;
 		this.reportYear = reportYear;
 		this.semeter = semeter;
+		this.className = className;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.academicYearStart = academicYearStar;
 	}
 	public int getId() {
 		return id;
@@ -56,6 +69,12 @@ public class Report {
 	}
 	public void setSubjectId(int subjectId) {
 		this.subjectId = subjectId;
+	}
+	public String getSubjectName() {
+		return subjectName;
+	}
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 	public float getDailyExam() {
 		return dailyExam;
@@ -98,6 +117,30 @@ public class Report {
 	}
 	public void setSemeter(int semeter) {
 		this.semeter = semeter;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getAcademicYearStart() {
+		return academicYearStart;
+	}
+	public void setAcademicYearStart(String academicYearStart) {
+		this.academicYearStart = academicYearStart;
 	}
 	
 	
